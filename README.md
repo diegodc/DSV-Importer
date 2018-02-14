@@ -2,9 +2,11 @@
 
 An easy way to read and convert Delimiter-separated values files.
 
-Example (see ExampleTest.class):
 
-We have a 'cars.dsv' file (fields delimited by a vertical bar '|'):
+
+Example (see [ExampleTest](src/test/java/functional/ExampleTest.java)):
+
+We have a '[cars.dsv](src/test/java/functional/cars.dsv)' file (fields delimited by a vertical bar '|'):
 
     MAKE    MODEL           YEAR    ENGINE              DISPLACEMENT    FUEL_CAPACITY
 
@@ -13,11 +15,20 @@ We have a 'cars.dsv' file (fields delimited by a vertical bar '|'):
     Toyota  Camry Hybrid    2010    Gas/Electric I4     2.4L/144        17.2
     Toyota  Camry           2018    Regular V-6         3.5 L/211       16
 
-We want to import and convert each record into a Car object (see Car.class).
+We want to read the file and convert each record into a [Car](src/test/java/functional/Car.java) object.
 
-First we define a CarConverter object:
 
-    private static class CarConverter implements RecordConverter<Car> {
+
+First we need to define a [RecordConverter](src/main/java/records/conversion/RecordConverter.java).
+DSV-importer will read the file, parse each record and use the RecordConverter to convert them.
+
+
+Our custom converter looks like this:
+
+    public class CarConverter implements RecordConverter<Car>
+
+
+This converter has only one method that takes in a [RecordParser](src/main/java/records/RecordParser.java), and returns the class we want.
 
         @Override
         public Car convert(RecordParser record) {
@@ -30,9 +41,6 @@ First we define a CarConverter object:
 
             return new Car(make, model, year, engine, displacement, fuelCapacity);
         }
-    }
-
-This converter has only one method that takes in a RecordParser, and returns the class we want.
 
 
 Then:
