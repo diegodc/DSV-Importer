@@ -1,0 +1,13 @@
+MAKE|MODEL|YEAR|ENGINE|DISPLACEMENT|FUEL_CAPACITY
+BMW|3-Series|2006|Gas 6-Cyl|3.2L/195|15.9
+BMW|3-Series|2010|Diesel I6|3.0L/183|16.1
+BMW|3-Series|2014|Intercooled Turbo Gas/Electric I-6|3.0 L/182|15
+BMW|3-Series|2014|Intercooled Turbo Premium Unleaded I-6|3.0 L/182|15.8
+BMW|3-Series|2018|Intercooled Turbo Diesel I-4|2.0 L/122|15
+Ford|F-150 Standard|1997|Gas V8|4.6L/281|30
+Ford|F-150|2010|Gas/Ethanol V8|5.4L/330|36
+Ford|F-150|2014|Regular Unleaded V-8|6.2 L/380|26
+Ford|F-150|2014|Twin Turbo Regular Unleaded V-6|3.5 L/213|26
+Toyota|Camry Hybrid|2010|Gas/Electric I4|2.4L/144|17.2
+Toyota|Camry|1997|Gas V6|3.0L/183|18.5
+Toyota|Camry|2018|Regular Unleaded V-6|3.5 L/211|16

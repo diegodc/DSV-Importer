@@ -10,7 +10,7 @@ import java.io.FileReader;
  *
  * @author diegodc 2015-04-07.
  */
-class ReaderFactory {
+public class ReaderFactory {
 
     public static TextReader openReaderFromFile(String fileName) {
         BufferedReader bufferedReader = openReader(getFile(fileName));
