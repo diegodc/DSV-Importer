@@ -40,7 +40,7 @@ class TextFileReaderTest {
     }
 
     @Test
-    void hasNextLineIfBufferedReaderReturnsNonNullString() throws Exception {
+    void hasNextLineIfBufferedReaderReturnsNonNullString() {
         assertTrue(textFileReader.hasNextLine());
     }
 
@@ -78,7 +78,7 @@ class TextFileReaderTest {
     }
 
     @Test
-    void returnsLineReadFromBufferedReader() throws Exception {
+    void returnsLineReadFromBufferedReader() {
         assertEquals("a line", textFileReader.readLine());
     }
 

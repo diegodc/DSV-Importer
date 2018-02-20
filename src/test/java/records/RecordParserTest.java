@@ -26,51 +26,31 @@ class RecordParserTest {
 
     @Test
     void numberOfFieldsMatchesGivenLine() {
-        List<String> fieldNames = new ArrayList<>();
-        fieldNames.add("field");
-
-        makeRecord(fieldNames, "value");
+        makeRecord(List.of("field"), "value");
         assertEquals(1, record.numberOfFields());
 
-        List<String> moreFieldNames = new ArrayList<>();
-        moreFieldNames.add("field 1");
-        moreFieldNames.add("field 2");
-        moreFieldNames.add("field 3");
-
+        List<String> moreFieldNames = List.of("field 1", "field 2", "field 3");
         makeRecord(moreFieldNames, "value 1,value 2,value 3");
         assertEquals(3, record.numberOfFields());
     }
 
     @Test
     void getStringFieldByName() {
-        List<String> fieldNames = new ArrayList<>();
-        fieldNames.add("string 1");
-        fieldNames.add("string 2");
-
-        makeRecord(fieldNames, "value 1,value 2");
+        makeRecord(List.of("string 1", "string 2"), "value 1,value 2");
         assertEquals("value 1", record.field("string 1").stringValue());
         assertEquals("value 2", record.field("string 2").stringValue());
     }
 
     @Test
     void getIntegerFieldByName() {
-        List<String> fieldNames = new ArrayList<>();
-        fieldNames.add("int 1");
-        fieldNames.add("int 2");
-
-        makeRecord(fieldNames, "1,3");
+        makeRecord(List.of("int 1", "int 2"), "1,3");
         assertEquals(1, record.field("int 1").intValue());
         assertEquals(3, record.field("int 2").intValue());
     }
 
     @Test
     void getDoubleFieldByName() {
-        List<String> fieldNames = new ArrayList<>();
-        fieldNames.add("double 1");
-        fieldNames.add("double 2");
-        fieldNames.add("double 3");
-
-        makeRecord(fieldNames, "1.2,3.4,4.5");
+        makeRecord(List.of("double 1", "double 2", "double 3"), "1.2,3.4,4.5");
         assertEquals(1.2, record.field("double 1").doubleValue());
         assertEquals(3.4, record.field("double 2").doubleValue());
         assertEquals(4.5, record.field("double 3").doubleValue());
@@ -78,12 +58,7 @@ class RecordParserTest {
 
     @Test
     void getDifferentTypeOfFieldsByName() {
-        List<String> fieldNames = new ArrayList<>();
-        fieldNames.add("string");
-        fieldNames.add("double");
-        fieldNames.add("int");
-
-        makeRecord(fieldNames, "value,3.51,47");
+        makeRecord(List.of("string", "double", "int"), "value,3.51,47");
         assertEquals("value", record.field("string").stringValue());
         assertEquals(3.51, record.field("double").doubleValue());
         assertEquals(47, record.field("int").intValue());
@@ -91,10 +66,7 @@ class RecordParserTest {
 
     @Test
     void acceptsDifferentDelimiters() {
-        List<String> fieldNames = new ArrayList<>();
-        fieldNames.add("string");
-        fieldNames.add("double");
-        fieldNames.add("int");
+        List<String> fieldNames = List.of("string", "double", "int");
 
         String commaSeparatedValues = "value,2.34,57";
         String tabSeparatedValues = "value\t2.34\t57";
@@ -117,12 +89,7 @@ class RecordParserTest {
 
     @Test
     void fieldsAreTrimmed() {
-        List<String> fieldNames = new ArrayList<>();
-        fieldNames.add("string");
-        fieldNames.add("int");
-        fieldNames.add("double");
-
-        makeRecord(fieldNames, " value   ,  2 ,  4.7 ");
+        makeRecord(List.of("string", "int", "double"), " value   ,  2 ,  4.7 ");
         assertEquals("value", record.field("string").stringValue());
         assertEquals(2, record.field("int").intValue());
         assertEquals(4.7, record.field("double").doubleValue());
@@ -130,58 +97,36 @@ class RecordParserTest {
 
     @Test
     void throwsNoSuchFieldIfFieldNameIsIncorrect() {
-        List<String> fieldNames = new ArrayList<>();
-        fieldNames.add("string");
-        fieldNames.add("int");
-
-        makeRecord(fieldNames, "value,1");
-
+        makeRecord(List.of("string", "int"), "value,1");
         assertThrows(NoSuchField.class, () -> record.field("incorrect name"));
     }
 
     @Test
     void throwsFormatExceptionIfFieldTypeIsIncorrect() {
-        List<String> fieldNames = new ArrayList<>();
-        fieldNames.add("field");
-
-        makeRecord(fieldNames, "value");
-
+        makeRecord(List.of("field"), "value");
         assertThrows(NumberFormatException.class, () -> record.field("field").intValue());
     }
 
     @Test
     void throwsExceptionIfNoFieldsAreGiven() {
-        List<String> fieldNames = new ArrayList<>();
-        fieldNames.add("field");
-
-        assertThrows(RecordParser.InvalidNumberOfFields.class, () -> makeRecord(fieldNames, ""));
+        assertThrows(RecordParser.InvalidNumberOfFields.class, () -> makeRecord(List.of("field"), ""));
     }
 
     @Test
     void throwsExceptionIfLessFieldsThanExpectedAreGiven() {
-        List<String> fieldNames = new ArrayList<>();
-        fieldNames.add("field 1");
-        fieldNames.add("field 2");
-        fieldNames.add("field 3");
-
+        List<String> fieldNames = List.of("field 1", "field 2", "field 3");
         assertThrows(RecordParser.InvalidNumberOfFields.class, () -> makeRecord(fieldNames, "value 1,value 2"));
     }
 
     @Test
     void throwsExceptionIfMoreFieldsThanExpectedAreGiven() {
-        List<String> fieldNames = new ArrayList<>();
-        fieldNames.add("field 1");
-        fieldNames.add("field 2");
-        fieldNames.add("field 3");
-
+        List<String> fieldNames = List.of("field 1", "field 2", "field 3");
         assertThrows(RecordParser.InvalidNumberOfFields.class, () -> makeRecord(fieldNames, "value 1,value 2,value 3,value 4"));
     }
 
     @Test
     void throwsExceptionIfNoFieldNamesAreGiven() {
-        List<String> fieldNames = new ArrayList<>();
-
-        assertThrows(RecordParser.InvalidNumberOfFields.class, () -> makeRecord(fieldNames, "value"));
+        assertThrows(RecordParser.InvalidNumberOfFields.class, () -> makeRecord(List.of(), "value"));
     }
 
 }

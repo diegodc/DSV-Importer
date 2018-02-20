@@ -3,11 +3,9 @@ package parsing;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Iterator;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * SimpleTokenizerTest
@@ -20,7 +18,7 @@ class SimpleTokenizerTest {
     private List<String> tokensList;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         tokenizer = new SimpleTokenizer(TokenDelimiter.COMMA);
     }
 
@@ -63,80 +61,46 @@ class SimpleTokenizerTest {
     @Test
     void stringWithNoDelimiterReturnsSameString() {
         parse("something");
-        assertEquals("something", tokensList.iterator().next());
+        assertIterableEquals(List.of("something"), tokensList);
     }
 
     @Test
     void doesNotTrimTokens() {
         parse(" something ");
-        assertEquals(" something ", tokensList.iterator().next());
+        assertIterableEquals(List.of(" something "), tokensList);
 
         parse("something ");
-        assertEquals("something ", tokensList.iterator().next());
+        assertIterableEquals(List.of("something "), tokensList);
 
         parse(" something");
-        assertEquals(" something", tokensList.iterator().next());
+        assertIterableEquals(List.of(" something"), tokensList);
     }
 
     @Test
     void completeTestUsingCommaAsDelimiter() {
-
         parse("one,two ,three,, , six, seven ");
-        Iterator<String> it = tokensList.iterator();
-
-        assertEquals("one", it.next());
-        assertEquals("two ", it.next());
-        assertEquals("three", it.next());
-        assertEquals("", it.next());
-        assertEquals(" ", it.next());
-        assertEquals(" six", it.next());
-        assertEquals(" seven ", it.next());
+        assertIterableEquals(List.of("one", "two ", "three", "", " ", " six", " seven "), tokensList);
     }
 
     @Test
     void completeTestUsingVerticalBarAsDelimiter() {
-
         tokenizer = new SimpleTokenizer(TokenDelimiter.VERTICAL_BAR);
-
         parse("one|two|three|| |six");
-        Iterator<String> it = tokensList.iterator();
-
-        assertEquals("one", it.next());
-        assertEquals("two", it.next());
-        assertEquals("three", it.next());
-        assertEquals("", it.next());
-        assertEquals(" ", it.next());
-        assertEquals("six", it.next());
+        assertIterableEquals(List.of("one", "two", "three", "", " ", "six"), tokensList);
     }
 
     @Test
     void completeTestUsingTabAsDelimiter() {
-
         tokenizer = new SimpleTokenizer(TokenDelimiter.TAB);
-
         parse("one\ttwo\tthree\t\t \tsix");
-        Iterator<String> it = tokensList.iterator();
-
-        assertEquals("one", it.next());
-        assertEquals("two", it.next());
-        assertEquals("three", it.next());
-        assertEquals("", it.next());
-        assertEquals(" ", it.next());
-        assertEquals("six", it.next());
+        assertIterableEquals(List.of("one", "two", "three", "", " ", "six"), tokensList);
     }
 
     @Test
     void completeTestUsingWhiteSpaceAsDelimiter() {
-
         tokenizer = new SimpleTokenizer(TokenDelimiter.WHITESPACE);
-
         parse("one two three four");
-        Iterator<String> it = tokensList.iterator();
-
-        assertEquals("one", it.next());
-        assertEquals("two", it.next());
-        assertEquals("three", it.next());
-        assertEquals("four", it.next());
+        assertIterableEquals(List.of("one", "two", "three", "four"), tokensList);
     }
 
     private void parse(String string) {

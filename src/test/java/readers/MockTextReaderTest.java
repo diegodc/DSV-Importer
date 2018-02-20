@@ -3,7 +3,6 @@ package readers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -19,15 +18,8 @@ class MockTextReaderTest {
     private MockTextReader reader;
 
     @BeforeEach
-    void setUp() throws Exception {
-
-        List<String> lines = new ArrayList<>();
-        lines.add("first line");
-        lines.add("line 2");
-        lines.add("line 3");
-        lines.add("next line is empty");
-        lines.add("");
-        lines.add("last line");
+    void setUp() {
+        List<String> lines = List.of("first line", "line 2", "line 3", "next line is empty", "", "last line");
 
         reader = new MockTextReader(lines);
     }
