@@ -43,7 +43,7 @@ This converter has only one method that takes in a [RecordParser](src/main/java/
         }
 
 
-Then:
+Now we only need to create a [RecordFile](src/main/java/records/RecordFile.java), and pass a [TextReader](src/main/java/readers/TextReader.java), the CarConverter, and the delimiter used in the file.
 
     TextReader reader = ReaderFactory.openReaderFromFile("cars.dsv");
 
