@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import parsing.TokenDelimiter;
 import records.exceptions.NoSuchField;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,31 +26,31 @@ class RecordParserTest {
 
     @Test
     void numberOfFieldsMatchesGivenLine() {
-        makeRecord(List.of("field"), "value");
+        makeRecord(listOf("field"), "value");
         assertEquals(1, record.numberOfFields());
 
-        List<String> moreFieldNames = List.of("field 1", "field 2", "field 3");
+        List<String> moreFieldNames = listOf("field 1", "field 2", "field 3");
         makeRecord(moreFieldNames, "value 1,value 2,value 3");
         assertEquals(3, record.numberOfFields());
     }
 
     @Test
     void getStringFieldByName() {
-        makeRecord(List.of("string 1", "string 2"), "value 1,value 2");
+        makeRecord(listOf("string 1", "string 2"), "value 1,value 2");
         assertEquals("value 1", record.field("string 1").stringValue());
         assertEquals("value 2", record.field("string 2").stringValue());
     }
 
     @Test
     void getIntegerFieldByName() {
-        makeRecord(List.of("int 1", "int 2"), "1,3");
+        makeRecord(listOf("int 1", "int 2"), "1,3");
         assertEquals(1, record.field("int 1").intValue());
         assertEquals(3, record.field("int 2").intValue());
     }
 
     @Test
     void getDoubleFieldByName() {
-        makeRecord(List.of("double 1", "double 2", "double 3"), "1.2,3.4,4.5");
+        makeRecord(listOf("double 1", "double 2", "double 3"), "1.2,3.4,4.5");
         assertEquals(1.2, record.field("double 1").doubleValue());
         assertEquals(3.4, record.field("double 2").doubleValue());
         assertEquals(4.5, record.field("double 3").doubleValue());
@@ -58,7 +58,7 @@ class RecordParserTest {
 
     @Test
     void getDifferentTypeOfFieldsByName() {
-        makeRecord(List.of("string", "double", "int"), "value,3.51,47");
+        makeRecord(listOf("string", "double", "int"), "value,3.51,47");
         assertEquals("value", record.field("string").stringValue());
         assertEquals(3.51, record.field("double").doubleValue());
         assertEquals(47, record.field("int").intValue());
@@ -66,7 +66,7 @@ class RecordParserTest {
 
     @Test
     void acceptsDifferentDelimiters() {
-        List<String> fieldNames = List.of("string", "double", "int");
+        List<String> fieldNames = listOf("string", "double", "int");
 
         String commaSeparatedValues = "value,2.34,57";
         String tabSeparatedValues = "value\t2.34\t57";
@@ -89,7 +89,7 @@ class RecordParserTest {
 
     @Test
     void fieldsAreTrimmed() {
-        makeRecord(List.of("string", "int", "double"), " value   ,  2 ,  4.7 ");
+        makeRecord(listOf("string", "int", "double"), " value   ,  2 ,  4.7 ");
         assertEquals("value", record.field("string").stringValue());
         assertEquals(2, record.field("int").intValue());
         assertEquals(4.7, record.field("double").doubleValue());
@@ -97,36 +97,40 @@ class RecordParserTest {
 
     @Test
     void throwsNoSuchFieldIfFieldNameIsIncorrect() {
-        makeRecord(List.of("string", "int"), "value,1");
+        makeRecord(listOf("string", "int"), "value,1");
         assertThrows(NoSuchField.class, () -> record.field("incorrect name"));
     }
 
     @Test
     void throwsFormatExceptionIfFieldTypeIsIncorrect() {
-        makeRecord(List.of("field"), "value");
+        makeRecord(listOf("field"), "value");
         assertThrows(NumberFormatException.class, () -> record.field("field").intValue());
     }
 
     @Test
     void throwsExceptionIfNoFieldsAreGiven() {
-        assertThrows(RecordParser.InvalidNumberOfFields.class, () -> makeRecord(List.of("field"), ""));
+        assertThrows(RecordParser.InvalidNumberOfFields.class, () -> makeRecord(listOf("field"), ""));
     }
 
     @Test
     void throwsExceptionIfLessFieldsThanExpectedAreGiven() {
-        List<String> fieldNames = List.of("field 1", "field 2", "field 3");
+        List<String> fieldNames = listOf("field 1", "field 2", "field 3");
         assertThrows(RecordParser.InvalidNumberOfFields.class, () -> makeRecord(fieldNames, "value 1,value 2"));
     }
 
     @Test
     void throwsExceptionIfMoreFieldsThanExpectedAreGiven() {
-        List<String> fieldNames = List.of("field 1", "field 2", "field 3");
+        List<String> fieldNames = listOf("field 1", "field 2", "field 3");
         assertThrows(RecordParser.InvalidNumberOfFields.class, () -> makeRecord(fieldNames, "value 1,value 2,value 3,value 4"));
     }
 
     @Test
     void throwsExceptionIfNoFieldNamesAreGiven() {
-        assertThrows(RecordParser.InvalidNumberOfFields.class, () -> makeRecord(List.of(), "value"));
+        assertThrows(RecordParser.InvalidNumberOfFields.class, () -> makeRecord(listOf(), "value"));
+    }
+
+    private List<String> listOf(String... elements) {
+        return Arrays.asList(elements);
     }
 
 }

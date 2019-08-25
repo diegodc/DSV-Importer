@@ -3,6 +3,7 @@ package parsing;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -61,50 +62,54 @@ class SimpleTokenizerTest {
     @Test
     void stringWithNoDelimiterReturnsSameString() {
         parse("something");
-        assertIterableEquals(List.of("something"), tokensList);
+        assertIterableEquals(listOf("something"), tokensList);
     }
 
     @Test
     void doesNotTrimTokens() {
         parse(" something ");
-        assertIterableEquals(List.of(" something "), tokensList);
+        assertIterableEquals(listOf(" something "), tokensList);
 
         parse("something ");
-        assertIterableEquals(List.of("something "), tokensList);
+        assertIterableEquals(listOf("something "), tokensList);
 
         parse(" something");
-        assertIterableEquals(List.of(" something"), tokensList);
+        assertIterableEquals(listOf(" something"), tokensList);
     }
 
     @Test
     void completeTestUsingCommaAsDelimiter() {
         parse("one,two ,three,, , six, seven ");
-        assertIterableEquals(List.of("one", "two ", "three", "", " ", " six", " seven "), tokensList);
+        assertIterableEquals(listOf("one", "two ", "three", "", " ", " six", " seven "), tokensList);
     }
 
     @Test
     void completeTestUsingVerticalBarAsDelimiter() {
         tokenizer = new SimpleTokenizer(TokenDelimiter.VERTICAL_BAR);
         parse("one|two|three|| |six");
-        assertIterableEquals(List.of("one", "two", "three", "", " ", "six"), tokensList);
+        assertIterableEquals(listOf("one", "two", "three", "", " ", "six"), tokensList);
     }
 
     @Test
     void completeTestUsingTabAsDelimiter() {
         tokenizer = new SimpleTokenizer(TokenDelimiter.TAB);
         parse("one\ttwo\tthree\t\t \tsix");
-        assertIterableEquals(List.of("one", "two", "three", "", " ", "six"), tokensList);
+        assertIterableEquals(listOf("one", "two", "three", "", " ", "six"), tokensList);
     }
 
     @Test
     void completeTestUsingWhiteSpaceAsDelimiter() {
         tokenizer = new SimpleTokenizer(TokenDelimiter.WHITESPACE);
         parse("one two three four");
-        assertIterableEquals(List.of("one", "two", "three", "four"), tokensList);
+        assertIterableEquals(listOf("one", "two", "three", "four"), tokensList);
     }
 
     private void parse(String string) {
         tokensList = tokenizer.tokenizeAsList(string);
+    }
+
+    private List<String> listOf(String... elements) {
+        return Arrays.asList(elements);
     }
 
 }

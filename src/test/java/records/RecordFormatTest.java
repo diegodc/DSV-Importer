@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import parsing.TokenDelimiter;
 import records.exceptions.NoSuchField;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,7 +18,7 @@ class RecordFormatTest {
 
     @Test
     void testDelimiter() {
-        List<String> names = List.of("field 1", "field 2", "field 3");
+        List<String> names = listOf("field 1", "field 2", "field 3");
 
         RecordFormat format = new RecordFormat(names, TokenDelimiter.COMMA);
         assertEquals(TokenDelimiter.COMMA, format.getTokenDelimiter());
@@ -25,27 +26,27 @@ class RecordFormatTest {
 
     @Test
     void testFieldNames() {
-        RecordFormat format = new RecordFormat(List.of("field 1", "field 2", "field 3"),
+        RecordFormat format = new RecordFormat(listOf("field 1", "field 2", "field 3"),
                 TokenDelimiter.COMMA);
 
-        List<String> expected = List.of("field 1", "field 2", "field 3");
+        List<String> expected = listOf("field 1", "field 2", "field 3");
 
         assertIterableEquals(expected, format.getFieldNames());
     }
 
     @Test
     void trimsFieldNames() {
-        RecordFormat format = new RecordFormat(List.of(" field 1   ", "  field 2  ", "   field 3 "),
+        RecordFormat format = new RecordFormat(listOf(" field 1   ", "  field 2  ", "   field 3 "),
                 TokenDelimiter.COMMA);
 
-        List<String> expected = List.of("field 1", "field 2", "field 3");
+        List<String> expected = listOf("field 1", "field 2", "field 3");
 
         assertIterableEquals(expected, format.getFieldNames());
     }
 
     @Test
     void fieldNumbers() {
-        RecordFormat format = new RecordFormat(List.of(" field 1 ", " field 2 ", " field 3 "),
+        RecordFormat format = new RecordFormat(listOf(" field 1 ", " field 2 ", " field 3 "),
                 TokenDelimiter.COMMA);
 
         assertEquals(0, format.getFieldNumber("field 1"));
@@ -55,9 +56,13 @@ class RecordFormatTest {
 
     @Test
     void throwsNoSuchFieldIfFieldNameIsIncorrect() {
-        RecordFormat format = new RecordFormat(List.of("field 1", "field 2"), TokenDelimiter.COMMA);
+        RecordFormat format = new RecordFormat(listOf("field 1", "field 2"), TokenDelimiter.COMMA);
 
         assertThrows(NoSuchField.class, () -> format.getFieldNumber("incorrect name"));
+    }
+
+    private List<String> listOf(String... elements) {
+        return Arrays.asList(elements);
     }
 
 }

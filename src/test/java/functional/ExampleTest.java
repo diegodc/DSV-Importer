@@ -22,18 +22,18 @@ import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 class ExampleTest {
 
     private String[] expectedData = {
-        "BMW 3-Series [2006] - Engine: Gas 6-Cyl 3.2L/195 - Fuel Capacity: 15.9 gal",
-        "BMW 3-Series [2010] - Engine: Diesel I6 3.0L/183 - Fuel Capacity: 16.1 gal",
-        "BMW 3-Series [2014] - Engine: Intercooled Turbo Gas/Electric I-6 3.0 L/182 - Fuel Capacity: 15.0 gal",
-        "BMW 3-Series [2014] - Engine: Intercooled Turbo Premium Unleaded I-6 3.0 L/182 - Fuel Capacity: 15.8 gal",
-        "BMW 3-Series [2018] - Engine: Intercooled Turbo Diesel I-4 2.0 L/122 - Fuel Capacity: 15.0 gal",
-        "Ford F-150 Standard [1997] - Engine: Gas V8 4.6L/281 - Fuel Capacity: 30.0 gal",
-        "Ford F-150 [2010] - Engine: Gas/Ethanol V8 5.4L/330 - Fuel Capacity: 36.0 gal",
-        "Ford F-150 [2014] - Engine: Regular Unleaded V-8 6.2 L/380 - Fuel Capacity: 26.0 gal",
-        "Ford F-150 [2014] - Engine: Twin Turbo Regular Unleaded V-6 3.5 L/213 - Fuel Capacity: 26.0 gal",
-        "Toyota Camry Hybrid [2010] - Engine: Gas/Electric I4 2.4L/144 - Fuel Capacity: 17.2 gal",
-        "Toyota Camry [1997] - Engine: Gas V6 3.0L/183 - Fuel Capacity: 18.5 gal",
-        "Toyota Camry [2018] - Engine: Regular Unleaded V-6 3.5 L/211 - Fuel Capacity: 16.0 gal"
+            "BMW 3-Series [2006] - Engine: Gas 6-Cyl 3.2L/195 - Fuel Capacity: 15.9 gal",
+            "BMW 3-Series [2010] - Engine: Diesel I6 3.0L/183 - Fuel Capacity: 16.1 gal",
+            "BMW 3-Series [2014] - Engine: Intercooled Turbo Gas/Electric I-6 3.0 L/182 - Fuel Capacity: 15.0 gal",
+            "BMW 3-Series [2014] - Engine: Intercooled Turbo Premium Unleaded I-6 3.0 L/182 - Fuel Capacity: 15.8 gal",
+            "BMW 3-Series [2018] - Engine: Intercooled Turbo Diesel I-4 2.0 L/122 - Fuel Capacity: 15.0 gal",
+            "Ford F-150 Standard [1997] - Engine: Gas V8 4.6L/281 - Fuel Capacity: 30.0 gal",
+            "Ford F-150 [2010] - Engine: Gas/Ethanol V8 5.4L/330 - Fuel Capacity: 36.0 gal",
+            "Ford F-150 [2014] - Engine: Regular Unleaded V-8 6.2 L/380 - Fuel Capacity: 26.0 gal",
+            "Ford F-150 [2014] - Engine: Twin Turbo Regular Unleaded V-6 3.5 L/213 - Fuel Capacity: 26.0 gal",
+            "Toyota Camry Hybrid [2010] - Engine: Gas/Electric I4 2.4L/144 - Fuel Capacity: 17.2 gal",
+            "Toyota Camry [1997] - Engine: Gas V6 3.0L/183 - Fuel Capacity: 18.5 gal",
+            "Toyota Camry [2018] - Engine: Regular Unleaded V-6 3.5 L/211 - Fuel Capacity: 16.0 gal"
     };
 
     @Test
@@ -61,5 +61,7 @@ class ExampleTest {
 
             return new Car(make, model, year, engine, displacement, fuelCapacity);
         }
+
     }
+
 }

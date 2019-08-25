@@ -5,6 +5,7 @@ import parsing.TokenDelimiter;
 import readers.MockTextReader;
 import records.exceptions.ConversionError;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,12 +27,12 @@ class RecordFileTest {
 
     @Test
     void convertEmptyReader() {
-        assertThrows(ConversionError.class, () -> makeReader(List.of()));
+        assertThrows(ConversionError.class, () -> makeReader(listOf()));
     }
 
     @Test
     void readerGetsClosedAfterConversion() {
-        List<String> lines = List.of("field 1, field 2, field 3", "value 1, value 2, value 3");
+        List<String> lines = listOf("field 1, field 2, field 3", "value 1, value 2, value 3");
 
         makeReader(lines);
         assertTrue(reader.isClosed());
@@ -40,7 +41,7 @@ class RecordFileTest {
     @Test
     void readerGetsClosedIfExceptionIsThrown() {
         try {
-            makeReader(List.of());
+            makeReader(listOf());
         } catch (ConversionError e) {
             assertTrue(reader.isClosed());
         }
@@ -48,8 +49,8 @@ class RecordFileTest {
 
     @Test
     void convertOneRecord() {
-        List<String> lines = List.of("field 1, field 2, field 3", "value 1, value 2, value 3");
-        List<String> expected = List.of("[value 1][value 2][value 3]");
+        List<String> lines = listOf("field 1, field 2, field 3", "value 1, value 2, value 3");
+        List<String> expected = listOf("[value 1][value 2][value 3]");
 
         makeReader(lines);
         assertIterableEquals(expected, file.getRecords());
@@ -57,11 +58,11 @@ class RecordFileTest {
 
     @Test
     void convertMultipleRecords() {
-        List<String> lines = List.of("field 1, field 2, field 3",
+        List<String> lines = listOf("field 1, field 2, field 3",
                 "line 1 value 1, line 1 value 2, line 1 value 3",
                 "line 2 value 1, line 2 value 2, line 2 value 3",
                 "line 3 value 1, line 3 value 2, line 3 value 3");
-        List<String> expected = List.of(
+        List<String> expected = listOf(
                 "[line 1 value 1][line 1 value 2][line 1 value 3]",
                 "[line 2 value 1][line 2 value 2][line 2 value 3]",
                 "[line 3 value 1][line 3 value 2][line 3 value 3]");
@@ -72,19 +73,23 @@ class RecordFileTest {
 
     @Test
     void ignoresEmptyLines() {
-        List<String> lines = List.of("field 1, field 2, field 3",
+        List<String> lines = listOf("field 1, field 2, field 3",
                 "line 1 value 1, line 1 value 2, line 1 value 3",
                 "line 2 value 1, line 2 value 2, line 2 value 3",
                 "",
                 "line 3 value 1, line 3 value 2, line 3 value 3");
 
-        List<String> expected = List.of(
+        List<String> expected = listOf(
                 "[line 1 value 1][line 1 value 2][line 1 value 3]",
                 "[line 2 value 1][line 2 value 2][line 2 value 3]",
                 "[line 3 value 1][line 3 value 2][line 3 value 3]");
 
         makeReader(lines);
         assertIterableEquals(expected, file.getRecords());
+    }
+
+    private List<String> listOf(String... elements) {
+        return Arrays.asList(elements);
     }
 
 }

@@ -11,7 +11,7 @@ public class Car {
     private String model;
     private int year;
     private String engine;
-    private  String displacement;
+    private String displacement;
     private double fuelCapacity;
 
     Car(String make, String model, int year, String engine, String displacement, double fuelCapacity) {

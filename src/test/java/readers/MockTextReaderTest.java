@@ -3,6 +3,7 @@ package readers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -19,7 +20,7 @@ class MockTextReaderTest {
 
     @BeforeEach
     void setUp() {
-        List<String> lines = List.of("first line", "line 2", "line 3", "next line is empty", "", "last line");
+        List<String> lines = listOf("first line", "line 2", "line 3", "next line is empty", "", "last line");
 
         reader = new MockTextReader(lines);
     }
@@ -64,6 +65,10 @@ class MockTextReaderTest {
     void readerGetsClosed() {
         reader.close();
         assertTrue(reader.isClosed());
+    }
+
+    private List<String> listOf(String... elements) {
+        return Arrays.asList(elements);
     }
 
 }
